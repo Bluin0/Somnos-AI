@@ -1,0 +1,20 @@
+package com.example.util
+
+import platform.Foundation.NSDate
+import platform.Foundation.timeIntervalSince1970
+import platform.Foundation.NSDateFormatter
+import platform.Foundation.NSLocale
+import platform.Foundation.currentLocale
+
+actual fun getCurrentTimestamp(): Long {
+    return (NSDate().timeIntervalSince1970 * 1000).toLong()
+}
+
+actual fun getCurrentFormattedDate(): String {
+    val formatter = NSDateFormatter().apply {
+        dateFormat = "yyyy-MM-dd"
+        locale = NSLocale.currentLocale
+    }
+    return formatter.stringFromDate(NSDate())
+}
+

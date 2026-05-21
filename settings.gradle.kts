@@ -9,6 +9,7 @@ pluginManagement {
     }
     mavenCentral()
     gradlePluginPortal()
+    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
   }
 }
 
@@ -19,9 +20,11 @@ dependencyResolutionManagement {
   repositories {
     google()
     mavenCentral()
+    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
   }
 }
 
-rootProject.name = "My Application"
+rootProject.name = "Somnos-AI"
 
-include(":app")
+include(":composeApp")
+
