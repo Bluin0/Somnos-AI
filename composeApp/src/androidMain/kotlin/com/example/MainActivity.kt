@@ -11,7 +11,7 @@ import com.example.data.getRoomDatabase
 import com.example.data.SleepRepository
 import com.example.ui.theme.MyApplicationTheme
 import com.example.viewmodel.SleepViewModel
-import com.example.viewmodel.SleepViewModelFactory
+import com.example.viewmodel.sleepViewModelFactory
 import com.russhwolf.settings.SharedPreferencesSettings
 
 class MainActivity : ComponentActivity() {
@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyApplicationTheme {
                 val viewModel: SleepViewModel = viewModel(
-                    factory = SleepViewModelFactory(repository, settings)
+                    factory = sleepViewModelFactory(repository, settings)
                 )
 
                 App(viewModel = viewModel)

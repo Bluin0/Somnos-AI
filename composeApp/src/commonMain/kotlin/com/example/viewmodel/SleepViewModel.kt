@@ -3,6 +3,8 @@ package com.example.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.api.Content
 import com.example.api.GeminiClient
 import com.example.api.GenerateContentRequest
@@ -519,15 +521,11 @@ class SleepViewModel(
 /**
  * Factory simple para instanciar el ViewModel sin inyecciones complejas.
  */
-class SleepViewModelFactory(
-    private val repository: SleepRepository,
-    private val settings: Settings
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(SleepViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return SleepViewModel(repository, settings) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
+fun sleepViewModelFactory(
+    repository: SleepRepository,
+    settings: Settings
+): ViewModelProvider.Factory = viewModelFactory {
+    initializer {
+        SleepViewModel(repository, settings)
     }
 }

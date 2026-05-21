@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.RoomDatabase
-import androidx.room.ConstructServices
+import androidx.room.ConstructedBy
 import androidx.room.RoomDatabaseConstructor
 import kotlinx.coroutines.flow.Flow
 
@@ -41,7 +41,7 @@ interface ChatDao {
 }
 
 @Database(entities = [SleepEntry::class, ChatMessage::class], version = 2, exportSchema = false)
-@ConstructServices(SleepDatabaseConstructor::class)
+@ConstructedBy(SleepDatabaseConstructor::class)
 abstract class SleepDatabase : RoomDatabase() {
     abstract fun sleepDao(): SleepDao
     abstract fun chatDao(): ChatDao

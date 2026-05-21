@@ -5,7 +5,9 @@ import androidx.room.RoomDatabase
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSUserDomainMask
+import kotlinx.cinterop.ExperimentalForeignApi
 
+@OptIn(ExperimentalForeignApi::class)
 actual fun getDatabaseBuilder(): RoomDatabase.Builder<SleepDatabase> {
     val documentDirectory = NSFileManager.defaultManager.URLForDirectory(
         directory = NSDocumentDirectory,
@@ -16,7 +18,6 @@ actual fun getDatabaseBuilder(): RoomDatabase.Builder<SleepDatabase> {
     )
     val dbFilePath = documentDirectory?.path + "/sleep_analysis_db.db"
     return Room.databaseBuilder<SleepDatabase>(
-        name = dbFilePath,
-        factory = { SleepDatabase::class.instantiateImpl() }
+        name = dbFilePath
     )
 }
