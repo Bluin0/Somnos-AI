@@ -1,0 +1,6 @@
+{
+  "name": "Análisis de Sueño IA",
+  "description": "Una aplicación para registrar tu sueño, usar la IA de Gemini para analizarlo y recibir consejos personalizados.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

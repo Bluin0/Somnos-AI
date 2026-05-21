@@ -1,0 +1,20 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Luna Creciente Dorada -->
+    <path
+        android:fillColor="#FFD54F"
+        android:pathData="M54,24 C62.3,24 70,27.4 75.6,33 C64,34 55,44 55,56 C55,67 63,76 74,78 C68,82 61.5,84 54,84 C37.4,84 24,70.6 24,54 C24,37.4 37.4,24 54,24 Z" />
+    
+    <!-- Estrella Brillante 1 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M78,32 L80,36 L84,38 L80,40 L78,44 L76,40 L72,38 L76,36 Z" />
+
+    <!-- Estrella Brillante 2 -->
+    <path
+        android:fillColor="#FFF59D"
+        android:pathData="M68,68 L69,71 L72,72 L69,73 L68,76 L67,73 L64,72 L67,71 Z" />
+</vector>
