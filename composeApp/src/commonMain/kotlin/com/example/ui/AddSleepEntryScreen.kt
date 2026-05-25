@@ -12,11 +12,14 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -25,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.viewmodel.SleepViewModel
 import kotlin.math.roundToInt
+import com.example.util.rememberHealthSyncManager
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,8 +38,12 @@ fun AddSleepEntryScreen(
     onSuccess: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val focusManager = LocalFocusManager.current
+    val healthSyncManager = rememberHealthSyncManager()
+
     // Estados observados del ViewModel
     val isAnalyzingMedia by viewModel.isAnalyzingMedia.collectAsState()
+    val isSyncingHealth by viewModel.isSyncingHealth.collectAsState()
     val analyzedResult by viewModel.analyzedResult.collectAsState()
     val analysisError by viewModel.analysisError.collectAsState()
 
@@ -110,7 +118,12 @@ fun AddSleepEntryScreen(
             modifier = modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(16.dp),
+                .padding(16.dp)
+                .pointerInput(Unit) {
+                    detectTapGestures(onTap = {
+                        focusManager.clearFocus()
+                    })
+                },
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -510,7 +523,12 @@ fun AddSleepEntryScreen(
             modifier = modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(16.dp),
+                .padding(16.dp)
+                .pointerInput(Unit) {
+                    detectTapGestures(onTap = {
+                        focusManager.clearFocus()
+                    })
+                },
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             // Título de la sección
@@ -588,6 +606,40 @@ fun AddSleepEntryScreen(
                         }
                     }
 
+                    if (healthSyncManager.isSupported) {
+                        Button(
+                            onClick = {
+                                viewModel.startHealthSync()
+                                healthSyncManager.requestPermission { granted ->
+                                    if (granted) {
+                                        healthSyncManager.fetchSleepData { sleepData ->
+                                            if (sleepData != null) {
+                                                viewModel.completeHealthSync(sleepData)
+                                            } else {
+                                                viewModel.failHealthSync("No se encontraron registros de sueño en las últimas 24 horas.")
+                                            }
+                                        }
+                                    } else {
+                                        viewModel.failHealthSync("Permiso de Apple Salud denegado.")
+                                    }
+                                }
+                            },
+                            enabled = !isAnalyzingMedia && !isSyncingHealth,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .testTag("sync_health_button"),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFFFC3158),
+                                contentColor = Color.White
+                            ),
+                            shape = RoundedCornerShape(12.dp)
+                        ) {
+                            Icon(Icons.Default.Favorite, contentDescription = null, modifier = Modifier.size(18.dp))
+                            Spacer(Modifier.width(8.dp))
+                            Text("Sincronizar con Apple Salud", fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                        }
+                    }
+
                     // Indicador de análisis con IA
                     if (isAnalyzingMedia) {
                         Spacer(Modifier.height(4.dp))
@@ -602,6 +654,28 @@ fun AddSleepEntryScreen(
                                 style = MaterialTheme.typography.bodySmall,
                                 fontWeight = FontWeight.Medium,
                                 color = MaterialTheme.colorScheme.primary,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
+
+                    // Indicador de sincronización con Apple Salud
+                    if (isSyncingHealth) {
+                        Spacer(Modifier.height(4.dp))
+                        Column(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            CircularProgressIndicator(
+                                strokeWidth = 3.dp,
+                                color = Color(0xFFFC3158)
+                            )
+                            Text(
+                                text = "Sincronizando datos con Apple Salud...",
+                                style = MaterialTheme.typography.bodySmall,
+                                fontWeight = FontWeight.Medium,
+                                color = Color(0xFFFC3158),
                                 textAlign = TextAlign.Center
                             )
                         }

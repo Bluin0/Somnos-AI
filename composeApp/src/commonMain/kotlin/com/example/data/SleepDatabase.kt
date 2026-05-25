@@ -8,6 +8,7 @@ import androidx.room.Query
 import androidx.room.RoomDatabase
 import androidx.room.ConstructedBy
 import androidx.room.RoomDatabaseConstructor
+import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -57,6 +58,7 @@ expect fun getDatabaseBuilder(): RoomDatabase.Builder<SleepDatabase>
 
 fun getRoomDatabase(builder: RoomDatabase.Builder<SleepDatabase>): SleepDatabase {
     return builder
+        .setDriver(BundledSQLiteDriver())
         .fallbackToDestructiveMigration(dropAllTables = true)
         .build()
 }

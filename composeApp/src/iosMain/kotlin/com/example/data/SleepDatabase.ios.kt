@@ -9,6 +9,7 @@ import kotlinx.cinterop.ExperimentalForeignApi
 
 @OptIn(ExperimentalForeignApi::class)
 actual fun getDatabaseBuilder(): RoomDatabase.Builder<SleepDatabase> {
+    println("getDatabaseBuilder: Started")
     val documentDirectory = NSFileManager.defaultManager.URLForDirectory(
         directory = NSDocumentDirectory,
         inDomain = NSUserDomainMask,
@@ -16,7 +17,9 @@ actual fun getDatabaseBuilder(): RoomDatabase.Builder<SleepDatabase> {
         create = true,
         error = null
     )
+    println("getDatabaseBuilder: documentDirectory: $documentDirectory")
     val dbFilePath = documentDirectory?.path + "/sleep_analysis_db.db"
+    println("getDatabaseBuilder: dbFilePath: $dbFilePath")
     return Room.databaseBuilder<SleepDatabase>(
         name = dbFilePath
     )

@@ -7,5 +7,5 @@ actual fun getGeminiApiKey(): String {
     if (!envKey.isNullOrBlank()) {
         return envKey
     }
-    return ""
+    return "AIzaSyAW1Z0lbZ5QDmivo1gTwV4QLSY6GmPDJd0"
 }

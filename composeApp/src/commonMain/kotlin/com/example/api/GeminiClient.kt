@@ -5,6 +5,7 @@ import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
@@ -30,10 +31,16 @@ object GeminiClient {
     }
 
     suspend fun generateContent(apiKey: String, request: GenerateContentRequest): GenerateContentResponse {
-        val url = "${BASE_URL}v1beta/models/gemini-3.5-flash:generateContent?key=$apiKey"
-        return httpClient.post(url) {
+        val url = "${BASE_URL}v1beta/models/gemini-2.5-flash:generateContent?key=$apiKey"
+        val response = httpClient.post(url) {
             contentType(ContentType.Application.Json)
             setBody(request)
-        }.body()
+        }
+        val status = response.status
+        if (status.value != 200) {
+            val errorBody = response.bodyAsText()
+            throw Exception("HTTP ${status.value}: $errorBody")
+        }
+        return response.body()
     }
 }

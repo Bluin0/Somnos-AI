@@ -10,6 +10,7 @@
 		9F7A233D2A78123400123456 /* iosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7A233C2A78123400123456 /* iosApp.swift */; };
 		9F7A233F2A78123400123456 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7A233E2A78123400123456 /* ContentView.swift */; };
 		9F7A23462A78123400123456 /* ComposeApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F7A23452A78123400123456 /* ComposeApp.framework */; };
+		9F7A23502A78123400123456 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F7A23512A78123400123456 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -17,6 +18,7 @@
 		9F7A233C2A78123400123456 /* iosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = source.swift; path = iosApp.swift; sourceTree = "<group>"; };
 		9F7A233E2A78123400123456 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = source.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		9F7A23452A78123400123456 /* ComposeApp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ComposeApp.framework; path = "../composeApp/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)/ComposeApp.framework"; sourceTree = "<group>"; };
+		9F7A23512A78123400123456 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 			children = (
 				9F7A233C2A78123400123456 /* iosApp.swift */,
 				9F7A233E2A78123400123456 /* ContentView.swift */,
+				9F7A23512A78123400123456 /* Assets.xcassets */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -67,6 +70,7 @@
 				9F7A234E2A78123400123456 /* Run Script (Compile KMP) */,
 				9F7A23352A78123400123456 /* Sources */,
 				9F7A23362A78123400123456 /* Frameworks */,
+				9F7A23522A78123400123456 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -109,6 +113,17 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9F7A23522A78123400123456 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F7A23502A78123400123456 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		9F7A234E2A78123400123456 /* Run Script (Compile KMP) */ = {
@@ -271,6 +286,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Somnos AI";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Sincroniza tus datos de sueño de Apple Salud para registrar y analizar automáticamente tu descanso de forma inteligente.";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -300,6 +317,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Somnos AI";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Sincroniza tus datos de sueño de Apple Salud para registrar y analizar automáticamente tu descanso de forma inteligente.";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

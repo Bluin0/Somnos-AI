@@ -13,10 +13,13 @@ import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.icons.filled.SupportAgent
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -48,6 +51,8 @@ fun ChatScreen(
         "¿Qué significa tener mucho REM?"
     )
 
+    val focusManager = LocalFocusManager.current
+
     // Desplazar automáticamente al fondo cuando hay nuevos mensajes
     LaunchedEffect(chatMessages.size, isGeneratingResponse) {
         if (chatMessages.isNotEmpty()) {
@@ -59,6 +64,11 @@ fun ChatScreen(
         modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = {
+                    focusManager.clearFocus()
+                })
+            }
     ) {
         // ENCABEZADO
         TopAppBar(

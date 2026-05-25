@@ -58,6 +58,10 @@ class SleepViewModel(
     private val _isAnalyzingMedia = MutableStateFlow(false)
     val isAnalyzingMedia: StateFlow<Boolean> = _isAnalyzingMedia.asStateFlow()
 
+    // Estado de sincronización con Salud
+    private val _isSyncingHealth = MutableStateFlow(false)
+    val isSyncingHealth: StateFlow<Boolean> = _isSyncingHealth.asStateFlow()
+
     private val _analyzedResult = MutableStateFlow<SleepExtractedData?>(null)
     val analyzedResult: StateFlow<SleepExtractedData?> = _analyzedResult.asStateFlow()
 
@@ -379,6 +383,26 @@ class SleepViewModel(
     fun clearExtractedResult() {
         _analyzedResult.value = null
         _analysisError.value = null
+    }
+
+    fun startHealthSync() {
+        _isSyncingHealth.value = true
+        _analysisError.value = null
+        _analyzedResult.value = null
+    }
+
+    fun completeHealthSync(data: SleepExtractedData) {
+        _analyzedResult.value = data
+        _isSyncingHealth.value = false
+    }
+
+    fun failHealthSync(errorMsg: String) {
+        _analysisError.value = errorMsg
+        _isSyncingHealth.value = false
+    }
+
+    fun setAnalyzedResult(data: SleepExtractedData?) {
+        _analyzedResult.value = data
     }
 
     // --- Chat Logic ---
